@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PrismSelectTabByIndex.Views.PageB"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <StackLayout>
+        <Label FontSize="Medium" Text="Page B" />
+
+        <Button Command="{Binding SelectATabCommand}" Text="Select A Tab" />
+        <Button Command="{Binding SelectBTabCommand}" Text="Select B Tab" />
+        <Button Command="{Binding Select0TabCommand}" Text="Select 0 Tab" />
+        <Button Command="{Binding Select1TabCommand}" Text="Select 1 Tab" />
+        <Button Command="{Binding Select2TabCommand}" Text="Select 2 Tab" />
+    </StackLayout>
+</ContentPage>
