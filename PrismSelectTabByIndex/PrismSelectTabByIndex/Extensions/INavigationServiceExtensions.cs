@@ -38,7 +38,19 @@ namespace PrismSelectTabByIndex.Extensions
                 if (!canNavigate)
                     throw new Exception($"IConfirmNavigation for {currentPage} returned false");
 
-                TabbedPage tabbedPage = GetTabbedPage(navigationService);
+                TabbedPage tabbedPage = null;
+
+                if (currentPage.Parent is TabbedPage parent) {
+                    tabbedPage = parent;
+                } else if (currentPage.Parent is NavigationPage navPage) {
+                    if (navPage.Parent != null && navPage.Parent is TabbedPage parent2) {
+                        tabbedPage = parent2;
+                    }
+                }
+
+                if (tabbedPage == null)
+                    throw new Exception("No parent TabbedPage could be found");
+
                 Page target = targetPageProvider.Invoke(tabbedPage);
 
                 var tabParameters = UriParsingHelper.GetSegmentParameters(target.GetType().Name, parameters);
@@ -92,26 +104,6 @@ namespace PrismSelectTabByIndex.Extensions
                 throw new Exception($"Could not find a Child Tab for '{name}'");
 
             return target;
-        }
-
-        private static TabbedPage GetTabbedPage(INavigationService navigationService)
-        {
-            var currentPage = ((IPageAware)navigationService).Page;
-
-            TabbedPage tabbedPage = null;
-
-            if (currentPage.Parent is TabbedPage parent) {
-                tabbedPage = parent;
-            } else if (currentPage.Parent is NavigationPage navPage) {
-                if (navPage.Parent != null && navPage.Parent is TabbedPage parent2) {
-                    tabbedPage = parent2;
-                }
-            }
-
-            if (tabbedPage == null)
-                throw new Exception("No parent TabbedPage could be found");
-
-            return tabbedPage;
         }
     }
 }
